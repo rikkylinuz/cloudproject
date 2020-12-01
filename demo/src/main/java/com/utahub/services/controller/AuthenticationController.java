@@ -3,6 +3,7 @@ package com.utahub.services.controller;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.utahub.services.ApplicationService;
 import com.utahub.services.AuthenticationResponse;
+import com.utahub.services.RegistrationResponse;
 import com.utahub.services.exception.AppException;
 import com.utahub.services.model.Role;
 import com.utahub.services.model.RoleName;
@@ -46,17 +47,19 @@ public class AuthenticationController {
     	String userName = loginRequest.get("username").toString();
     	String password = loginRequest.get("password").toString();
     	logger.info("username: {} , password: {}",userName,password);
+    	logger.info("exists bu username authenticatiom: {}"+userRepository.existsByUsername(userName));
         if(userRepository.existsByUsername(userName)) {
         	User user = applicationService.authenticate(userName, password);
             if(user!=null) {
             	logger.info("User authenticated successfully");
-            	return ResponseEntity.ok(new AuthenticationResponse(true, user.getUsername()));
+            	return ResponseEntity.ok(new AuthenticationResponse(true, user.getUsername(), "User authenticated successfully"));
             }
         } else {
         	logger.info("User not registered");
+        	return ResponseEntity.ok(new AuthenticationResponse(false, userName, "User not registered"));
         }
         logger.info("User not authenticated, bad credentials");
-        return ResponseEntity.ok(HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.ok(new AuthenticationResponse(false, userName, "User not authenticated, bad credentials"));
     }
 
     @PostMapping("/register")
@@ -67,13 +70,18 @@ public class AuthenticationController {
     	String email = signUpRequest.get("email").toString();
         System.out.println("register input:"+ signUpRequest.get("username").toString());
         System.out.println("register input:"+ signUpRequest.get("password").toString());
+        System.out.println("username xists? "+userRepository.existsByUsername(userName));
+        System.out.println("email xists? "+userRepository.existsByUsername(email));
+
         if(userRepository.existsByUsername(userName)) {
-            return new ResponseEntity(("Username is already taken!"),
+        	logger.info("Username is already taken!");
+            return new ResponseEntity(new RegistrationResponse(false,"Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
 
         if(userRepository.existsByEmail(email)) {
-            return new ResponseEntity(("Email Address already in use!"),
+        	logger.info("Email Address already in use");
+            return new ResponseEntity(new RegistrationResponse(false, "Email Address already in use!"),
                     HttpStatus.BAD_REQUEST);
         }
 
@@ -93,7 +101,7 @@ public class AuthenticationController {
                 .buildAndExpand(result.getUsername()).toUri();
         logger.info("New user registered successfully");
 
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(new RegistrationResponse(true, "User registered successfully"));
     }
 
 }
