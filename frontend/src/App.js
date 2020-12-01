@@ -1,17 +1,14 @@
 // import logo, { ReactComponent } from './logo.svg';
 import React, { Component } from 'react';
 import './App.css';
-import Signup from './components/Signup.js';
-import Login from './components/Login.js';
 import HomePage from './components/HomePage.js';
 import NotFound from './commons/NotFound';
 import {
   Route,
-  withRouter, BrowserRouter as Router,
+  BrowserRouter as Router,
   Switch
 } from 'react-router-dom';
-import { Grid, FormGroup, List } from '@material-ui/core';
-import { Alert,AlertTitle } from '@material-ui/lab';
+import { Grid, List } from '@material-ui/core';
 import Dashboard from './components/Dashboard';
 
 
@@ -24,9 +21,6 @@ class App extends Component {
       user: {},
       loggedInStatus: 'NOT_LOGGED_IN'
     }
-
-    this.handleLogin = this.handleLogin.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
   }
 
   checkLoginStatus() {
@@ -54,34 +48,16 @@ class App extends Component {
     this.checkLoginStatus();
   }
 
-  handleLogout() {
-    this.setState({
-      loggedInStatus: "NOT_LOGGED_IN",
-      user: {}
-    });
-  }
-
-  handleLogin(data) {
-    this.setState({
-      loggedInStatus: "LOGGED_IN",
-      user: data.user
-    });
-  }
-
   render() {
     return (
       <Router>
         <Grid className="app-container">
-
           <List className="app-content">
-            <div className="container">
-              
+            <div className="container">            
               <Switch>      
                 <Route exact path={"/"} 
                   render={props => (
-                    
-                    <HomePage {...props} handleLogin={this.handleLogin}
-                    handleLogout={this.handleLogout} isAuthenticated={this.state.isAuthenticated} />
+                    <HomePage {...props} history={this.props.history} />
                   )}
                 />
                 <Route path={"/dashboard"} 
@@ -89,16 +65,8 @@ class App extends Component {
                     <Dashboard {...props} isAuthenticated={this.state.isAuthenticated} />
                   )}
                 />
-                {/* <Route path="/authenticate" 
-                  render={props => (
-                    <Login {...props} isAuthenticated={this.state.isAuthenticated} />
-                  )}
-                />
-                <Route path="/register" component={Signup} history={this.props.history}/>
-                <Route component={NotFound} history={this.props.history}/> */}
-              </Switch>
-              
-              
+                <Route component={NotFound} history={this.props.history}/> 
+              </Switch>          
             </div>
           </List>
         </Grid>

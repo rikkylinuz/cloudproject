@@ -1,4 +1,4 @@
-import { API_BASE_URL, ACCESS_TOKEN } from './Constants';
+import { API_BASE_URL } from './Constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -55,16 +55,16 @@ export function formatDateTime(dateTimeString) {
   return date.getDate() + ' ' + monthNames[monthIndex] + ' ' + year + ' - ' + date.getHours() + ':' + date.getMinutes();
 }  
 
-export function getCurrentUser() {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
-        return Promise.reject("No access token set.");
-    }
+// export function getCurrentUser() {
+//     if(!localStorage.getItem(ACCESS_TOKEN)) {
+//         return Promise.reject("No access token set.");
+//     }
 
-    return request({
-        url: API_BASE_URL + "/user/me",
-        method: 'GET'
-    });
-}
+//     return request({
+//         url: API_BASE_URL + "/user/me",
+//         method: 'GET'
+//     });
+// }
 
 export function login(loginRequest) {
     return request({
@@ -82,6 +82,29 @@ export function signup(signupRequest) {
     });
 }
 
+export function postProduct(postProductRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/postProduct",
+        method: 'POST',
+        body: JSON.stringify(postProductRequest)
+    });
+}
+
+export function purchaseProduct(postProductRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/purchaseProduct",
+        method: 'POST',
+        body: JSON.stringify(postProductRequest)
+    });
+}
+
+export function getProducts() {
+    return request({
+        url: API_BASE_URL + "/auth/getAllProducts",
+        method: 'GET'
+    });
+}
+
 export function checkUsernameAvailability(username) {
     return request({
         url: API_BASE_URL + "/user/checkUsernameAvailability?username=" + username,
@@ -96,9 +119,11 @@ export function checkEmailAvailability(email) {
     });
 }
 
-export function getUserProfile(username) {
-    return request({
-        url: API_BASE_URL + "/users/" + username,
-        method: 'GET'
-    });
-}
+
+
+// export function getUserProfile(username) {
+//     return request({
+//         url: API_BASE_URL + "/users/" + username,
+//         method: 'GET'
+//     });
+// }

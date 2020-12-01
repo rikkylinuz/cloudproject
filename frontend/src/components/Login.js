@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { login } from '../util/Utils';
 import '../css/Login.css';
-import { Link, Redirect, Route, withRouter } from 'react-router-dom';
-import { ACCESS_TOKEN } from '../util/Constants';
+import { withRouter } from 'react-router-dom';
 import { Alert,AlertTitle } from '@material-ui/lab';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
 import TextField from '@material-ui/core/TextField';
-// import Button from 'material-ui/RaisedButton';
-import { FormGroup, Input, Button, Icon, FormControl } from '@material-ui/core';
-import { blue } from '@material-ui/core/colors';
-import HomePage from './HomePage';
+import { FormGroup, Button, FormControl } from '@material-ui/core';
+
 const FormItem = FormControl;
 class Login extends Component {
     constructor(props){
@@ -18,9 +14,9 @@ class Login extends Component {
         this.state={
           username:  '',
           password: '',
-          loginErr: ''
+          loginErr: '',
+          isAuthenticated: false
       }
-      console.log("this.state.isAuthenticated cons",this.state.isAuthenticated);
       this.handleChange = this.handleChange.bind(this);
       this.handleClick = this.handleClick.bind(this);
     }
@@ -45,21 +41,19 @@ class Login extends Component {
         login(loginRequest)
         .then(response => {
             console.log("response: ",response);
-            // this.state.isAuthenticated=true;
-            
-            sessionStorage.setItem("SESSION_AUTHENTICATED",true);
-            sessionStorage.setItem("SESSION_USERNAME",response.username);
-            console.log("session: ",sessionStorage.getItem("SESSION_AUTHENTICATED"));
-            console.log("session: ",sessionStorage.getItem("SESSION_USERNAME"));
-            
-            
-            // this.props.onLogin();
-            // this.props.history.push('/');
-            this.setState({isAuthenticated : true});
-            if(response.authenticated){
-              this.props.handleSuccessfulAuth(response.username);
-              this.props.history.push("/dashboard");
+            if(response.authentication === true){
+              sessionStorage.setItem("SESSION_AUTHENTICATED",true);
+              sessionStorage.setItem("SESSION_USERNAME",response.username);
+              console.log("session: ",sessionStorage.getItem("SESSION_AUTHENTICATED"));
+              console.log("session: ",sessionStorage.getItem("SESSION_USERNAME"));
+              this.setState({isAuthenticated : true});
+            } else{
+                  <Alert severity="info" >
+                    <AlertTitle>INFO</AlertTitle>
+                    {response.message}
+                  </Alert>   
             }
+            
         })
         .catch(error => {
                         if(error.status === 401) {
@@ -67,24 +61,24 @@ class Login extends Component {
                             console.log("login msg:", "Your Username or Password is incorrect. Please try again!");
                             <Alert severity="info" >
                             <AlertTitle>INFO</AlertTitle>
-                            unauthmessage
+                            {unauthmessage}
                             </Alert>              
                         } else {
                             let errormessage = {message: 'UTAHub App',description: error.message || 'Sorry! Something went wrong. Please try again!'};
                             console.log("login msg:", error);
                             <Alert severity="info" >
                             <AlertTitle>INFO</AlertTitle>
-                            errormessage
+                            {errormessage}
                             </Alert>                                               
                         }
                     });
         }
     
       render() {
-          if(this.props.isAuthenticated){
+          if(this.state.isAuthenticated){
             console.log("Inside auth",this.state.isAuthenticated);
-            return <Redirect to="/" />;
-            
+            // return <Redirect to="/dashboard" />;
+            this.props.history.push("/dashboard");
           }
           return (
             <div className="login-container">
@@ -92,7 +86,7 @@ class Login extends Component {
                 <div>
                 <h1 className="page-title">Login</h1>
                  
-                 <div className="login-content" className="login-form">
+                 <div className="login-content">
                  <FormGroup onSubmit={this.handleClick} className="login-form">
                         <FormItem label="Username"
                             hasFeedback
@@ -123,16 +117,16 @@ class Login extends Component {
                         </FormItem>
                         <FormItem>
                             <Button type="primary" 
-                                htmlType="submit" 
+                                // htmlType="submit" 
                                 size="large" 
                                 className="signup-form-button"
                                 /* disabled={this.isFormInvalid()}*/ onClick={(event) => this.handleClick(event)}>Sign In</Button>
-                            Or <Link to="/register">register now!</Link>
+                            {/* Or <Link to="/register">register now!</Link> */}
                         </FormItem>
                     </FormGroup>
                </div> 
-               </div>
-               </MuiThemeProvider>
+              </div>
+              </MuiThemeProvider>
             </div>
           );
         }

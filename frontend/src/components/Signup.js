@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { signup, checkUsernameAvailability, checkEmailAvailability } from '../util/Utils';
 import '../css/Signup.css';
-import { Link } from 'react-router-dom';
 import { 
     NAME_MIN_LENGTH, NAME_MAX_LENGTH, 
     USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH,
@@ -9,7 +8,7 @@ import {
     PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH
 } from '../util/Constants';
 import { Alert,AlertTitle } from '@material-ui/lab';
-import { FormGroup, Input, Button , FormControl, TextField} from '@material-ui/core';
+import { FormGroup, Button , FormControl, TextField} from '@material-ui/core';
 const FormItem = FormControl;
 
 class Signup extends Component {
@@ -60,17 +59,18 @@ class Signup extends Component {
         };
         signup(signupRequest)
         .then(response => {
+            console.log("response",response);
             let successmessage = {message: 'UTAHub App',description: "Thank you! You're successfully registered. Please Login to continue!"};
             <Alert severity="info" >console.log("Thank you! You're successfully registered.");
             <AlertTitle>INFO</AlertTitle>
-            successmessage
+            {successmessage}
             </Alert>         
             this.props.history.push("/");
         }).catch(error => {
             let errormessage = {message: 'UTAHub App',description: error.message || 'Sorry! Something went wrong. Please try again!'};
             <Alert severity="info" >console.log("Error while registering")
             <AlertTitle>INFO</AlertTitle>
-            errormessage
+            {errormessage}
             </Alert>
         });
     }
@@ -86,7 +86,7 @@ class Signup extends Component {
     render() {
         return (
             <div className="signup-container">
-                <h1 className="page-title">Sign Up</h1>
+                <h1 className="page-title">Sign Up below. If you're not already registered.</h1>
                 <div className="signup-content">
                     <FormGroup onSubmit={this.handleSubmit} className="signup-form">
                         <FormItem 
@@ -151,7 +151,7 @@ class Signup extends Component {
                                 size="large" 
                                 className="signup-form-button"
                                 /* disabled={this.isFormInvalid()}*/ onClick={(event) => this.handleSubmit(event)}>Sign up</Button>
-                            Already registed? <Link to="/authenticate">Login now!</Link>
+                            {/* Already registed? <Link to="/authenticate">Login now!</Link> */}
                         </FormItem>
                     </FormGroup>
                 </div>

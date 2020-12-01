@@ -1,12 +1,5 @@
-import { AppBar, withStyles } from '@material-ui/core';
-import { Tab, Tabs } from 'material-ui';
+import {withStyles } from '@material-ui/core';
 import React, { Component } from 'react';
-import { Redirect } from 'react-router';
-import BuySellItems from './BuySellItems';
-import SearchLostItem from './SearchLostItem';
-import UploadLostItem from './UploadLostItem';
-import Container from '@material-ui/core/Container';
-import { TabPanel } from '@material-ui/lab';
 import Login from './Login';
 import Signup from './Signup';
 
@@ -27,7 +20,6 @@ class HomePage extends Component {
         
     }
     handleSuccessfulAuth(data){
-        this.props.handleLogin(data);
         this.props.history.push("/dashboard");
     }
     
@@ -51,12 +43,8 @@ class HomePage extends Component {
     render() {
         return (
           <div>
-            <h1>Home</h1>
-            <h1>Status: {this.props.loggedInStatus}</h1>
-            {/* <button onClick={() => this.logout()}>Logout</button> */}
-            <Login handleSuccessfulAuth={this.handleSuccessfulAuth} />
-            <Signup handleSuccessfulAuth={this.handleSuccessfulAuth} />
-            
+            <Login handleSuccessfulAuth={this.handleSuccessfulAuth} history={this.props.history} />
+            <Signup handleSuccessfulAuth={this.handleSuccessfulAuth} />            
           </div>
         );
       }

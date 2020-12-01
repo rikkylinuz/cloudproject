@@ -1,12 +1,14 @@
-import { AppBar, withStyles } from '@material-ui/core';
+import { AppBar, Button, withStyles } from '@material-ui/core';
 import { Tab, Tabs } from 'material-ui';
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
 import BuySellItems from './BuySellItems';
 import SearchLostItem from './SearchLostItem';
 import UploadLostItem from './UploadLostItem';
-import Container from '@material-ui/core/Container';
-import { TabPanel } from '@material-ui/lab';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
+
 
 const styles = theme => ({
     appbar: {
@@ -17,27 +19,66 @@ const styles = theme => ({
     }
 });
 
-class HomePage extends Component {
+
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box p={3}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+  
+  TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+  };
+
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
+
+class Dashboard extends Component {
+
     constructor(props){
         super(props);
 
         this.state = {
             redirect : false,
+            updatedItem: {},
+            newItem: null,
             value: 0
         }
-        this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
-    
     }
-    handleSuccessfulAuth(data){
-        this.props.history.push("/");
-    }
-    
+
     handleChange = (event, value) => {
         this.setState({value});
     }
 
+    updatedItem = item => {
+        this.setState({
+            updatedItem : item
+        })
+    };
+
     componentDidMount(){
         const sessionToken = sessionStorage.getItem("SESSION_AUTHENTICATED");
+        console.log("session token", sessionToken);
         if(!sessionToken){
             this.setState({redirect: true});
         }
@@ -48,43 +89,39 @@ class HomePage extends Component {
         sessionStorage.removeItem("SESSION_USERNAME");
         this.setState({redirect: true});
     }
-
-    render() {
-        const redirect = this.state;
+    render(){
+        const redirect = this.state.redirect;
         const username = sessionStorage.getItem("SESSION_USERNAME"); 
         const {classes} = this.props;
-        const {values} = this.state;
         if(redirect){
-            return <Redirect to="/authenticate" />
+            return <Redirect to="/" />
         }
-        return(
-            
-            <div><p>{this.props.isAuthenticated}</p>
+        return (
+            <div>
                 <div>
                     <AppBar position="static" className={classes.appbar}>
                         <Tabs value={this.state.value} onChange={this.handleChange}>
-                            <Tab label="Buy/Sell Items" />
-                            <Tab label="Search Lost-Item" />
-                            <Tab label="Upload Lost-Item" />
+                            <Tab label="Buy/Sell Items" {...a11yProps(0)}/>
+                            <Tab label="Search Lost-Item" {...a11yProps(1)}/>
+                            <Tab label="Upload Lost-Item" {...a11yProps(2)}/>
                         </Tabs>
+                        <Typography align="right">Welcome {username}</Typography>
+                            <Button onClick={this.logout}>Logout</Button>
                     </AppBar>
-                </div>
-                <div>
-                    <div>Welcome {username}</div>
-                    <div onClick={this.logout}>Logout</div>
-                </div>
-                <TabPanel value={0} index={0}>
-                    <BuySellItems />
+                      
+                 <TabPanel value={this.state.value} index={0} >
+                    <BuySellItems updatedItem={this.state.updatedItem} newItem={this.state.newItem} history={this.props.history}/>
                 </TabPanel>
-                <TabPanel value={1} index={1}>
+                <TabPanel value={this.state.value} index={1} >
                     <SearchLostItem />
                 </TabPanel>
-                <TabPanel value={2} index={2}>
+                <TabPanel value={this.state.value} index={2} >
                     <UploadLostItem />
-                </TabPanel>
+                </TabPanel> 
+                </div>
             </div>
         );
-    }
+    }   
 }
 
-export default withStyles(styles) (HomePage);
+export default withStyles(styles) (Dashboard);
