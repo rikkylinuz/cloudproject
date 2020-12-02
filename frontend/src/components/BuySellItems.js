@@ -19,14 +19,16 @@ import {getProducts} from '../util/Utils.js'
 
   //CARD view
   const useStyles = makeStyles((theme) => ({
+    
     root: {
-      maxWidth: '30%',
+        width: '30px',
+        height: '30px',
     },
     media: {
       height: '25%',
-      width: '25%',
-      paddingTop: '20%', // 16:9
-    }
+      width: '25%',// 16:9
+    },
+    
   }));
 
 class BuySellItems extends Component {
@@ -101,6 +103,9 @@ class BuySellItems extends Component {
     }
 
     render(){
+        const style = {
+            height: 32,
+          };
         const classes = useStyles;
         if(this.state.isSellItemEnabled){
             return <SellProduct changeSellItemEnabled={this.changeSellItemEnabled} history={this.props.history}/>
@@ -128,8 +133,8 @@ class BuySellItems extends Component {
                         subheader={'By '+tile.sellerName}
                     />
                     <CardMedia 
-                        width={'25%'}
-                        className={classes.media}
+                        style={style}
+                        // className={classes.media}
                         src={tile.picture.slice(1,-1)}
                         title={tile.productName}
                     />
