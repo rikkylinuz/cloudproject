@@ -1,6 +1,7 @@
 package com.utahub.services.controller;
 
 import java.awt.PageAttributes.MediaType;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
 import com.utahub.services.ApplicationService;
+import com.utahub.services.PostItemResponse;
 import com.utahub.services.PostProductResponse;
+import com.utahub.services.model.Lostitem;
 import com.utahub.services.model.Product;
+import com.utahub.services.repository.LostItemRepository;
 import com.utahub.services.repository.ProductRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -33,10 +37,14 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
     @Autowired
     ProductRepository productRepository;
     
+    @Autowired
+    LostItemRepository Lostrepository;
+    
     @GetMapping(value = "/getAllProducts")
     public List<Product> getAllProducts(){
     	return productRepository.findAll();
     }
+
     
     @PostMapping("/postProduct")
     public ResponseEntity<?> postProductForSale(@RequestBody Map<String, Object> postProductRequest) {
@@ -71,5 +79,18 @@ private static final Logger logger = LoggerFactory.getLogger(HomeController.clas
     	Product result = productRepository.save(p);
     	return ResponseEntity.ok(new PostProductResponse(true, "successfully purchased item for sale!"));
     }
-    
+    @PostMapping("/postlostitem")
+    public ResponseEntity<?> postlostitem(@RequestBody Map<String, Object> postItemRequest) {
+    	logger.info("hi");
+    	String productName = postItemRequest.get("LostitemName").toString();
+    	String description = postItemRequest.get("Lostitemdescription").toString();
+    	String sellerName = postItemRequest.get("sellerName").toString();
+    	String picture = postItemRequest.get("picture").toString();
+    	logger.info("product name: {}  sellername: {} Lostitemdescription : {}  ",
+    			productName,sellerName,description);
+    	Lostitem items = new  Lostitem(productName, description, picture, sellerName);
+    	Lostitem result = Lostrepository.save(items);
+    	System.out.println("Result: "+result);
+    	return ResponseEntity.ok(new PostItemResponse(true, "successfully purchased item for sale!"));
+    }
 }

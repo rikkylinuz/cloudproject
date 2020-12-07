@@ -89,7 +89,13 @@ export function postProduct(postProductRequest) {
         body: JSON.stringify(postProductRequest)
     });
 }
-
+export function postItem(postItemRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/postlostitem",
+        method: 'POST',
+        body: JSON.stringify(postItemRequest)
+    });
+}
 export function purchaseProduct(postProductRequest) {
     return request({
         url: API_BASE_URL + "/auth/purchaseProduct",

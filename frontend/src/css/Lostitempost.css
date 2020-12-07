@@ -1,0 +1,21 @@
+.signup-container {
+    max-width: 420px;
+    margin: 0 auto;
+    margin-top: 40px;    
+}
+
+.postitem-form-button {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.postitem-form-button[disabled], .postitem-form-button[disabled]:hover, .postitem-form-button[disabled]:focus {
+    opacity: 0.6;
+    color: #fff;
+    background-color: #1890ff;
+    border-color: #1890ff;
+}
+
+.postitem-form input {
+    margin-bottom: 3px;
+}
