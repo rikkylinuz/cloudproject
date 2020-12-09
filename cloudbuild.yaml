@@ -34,7 +34,7 @@ steps:
 # Step 6: Creating docker image using docker file present in server folder
   - name: docker
     dir: 'demo'
-    args: ["build", "-t", "gcr.io/utahub/webapp3", "."]
+    args: ["build", "-t", "gcr.io/utahub-298002/webapp3", "."]
 
 # Step 7: pushing docker image to GCP Container Registry
   - name: "gcr.io/utahub-298002/docker"
