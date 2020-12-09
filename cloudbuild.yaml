@@ -38,12 +38,12 @@ steps:
 
 # Step 7: pushing docker image to GCP Container Registry
   - name: "gcr.io/utahub-298002/docker"
-    args: ["push", "gcr.io/utahub/webapp3"]
+    args: ["push", "gcr.io/utahub-298002/webapp3"]
 
 # Step 8: Deploying this image using app.yaml present in **server/src/main/appengine** to GCP **APP ENGINE**
   - name: 'gcr.io/cloud-builders/gcloud'
     dir: 'demo/src/main/appengine'
-    args: ['app', 'deploy', "--image-url=gcr.io/utahub/webapp3"]
+    args: ['app', 'deploy', "--image-url=gcr.io/utahub-298002/webapp3"]
     timeout: "30m0s"
 
 # Step 9: This step is make sure that dispatch.yaml file is deployed once all the services are started
@@ -52,4 +52,4 @@ steps:
     args: ["app", "deploy", "dispatch.yaml"]
     timeout: "30m0s"
 timeout: "100m0s"
-images: ["gcr.io/utahub/webapp3"]
+images: ["gcr.io/utahub-298002/webapp3"]
