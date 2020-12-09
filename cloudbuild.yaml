@@ -37,7 +37,7 @@ steps:
     args: ["build", "-t", "gcr.io/utahub-298002/webapp3", "."]
 
 # Step 7: pushing docker image to GCP Container Registry
-  - name: "gcr.io/utahub-298002/docker"
+  - name: "gcr.io/cloud-builders/docker"
     args: ["push", "gcr.io/utahub-298002/webapp3"]
 
 # Step 8: Deploying this image using app.yaml present in **server/src/main/appengine** to GCP **APP ENGINE**
