@@ -8,7 +8,7 @@ steps:
 
 # Step 2: For creating optinimized build
   - name: "gcr.io/cloud-builders/npm"
-    dir: 'ui'
+    dir: 'frontend'
     args: ["run", "build"]
 
 # Step 3: This step will execute app.yaml in your ui folder and deploy your app based on the configuration specified
