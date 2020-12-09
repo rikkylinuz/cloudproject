@@ -44,8 +44,16 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+            <version>8.0.20</version>
 			<scope>runtime</scope>
 		</dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
+<dependency>
+    <groupId>com.google.api-client</groupId>
+    <artifactId>google-api-client</artifactId>
+    <version>1.30.10</version>
+</dependency>
+
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
@@ -92,11 +100,13 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>2.3.4.RELEASE</version>
 		</dependency>
-
+            <!-- Hibernate -->
+      
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-java8</artifactId>
 		</dependency>
+        
 		<!--<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-gcp-starter</artifactId>
@@ -109,18 +119,34 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-gcp-starter-storage</artifactId>
 		</dependency>-->
-
+        <!-- https://mvnrepository.com/artifact/com.google.cloud.sql/mysql-socket-factory -->
+		<!-- <dependency>
+		    <groupId>com.google.cloud.sql</groupId>
+		    <artifactId>mysql-socket-factory</artifactId>
+		    <version>1.1.0</version>
+		</dependency> -->
+        <dependency>
+    <groupId>com.google.cloud.sql</groupId>
+    <artifactId>mysql-socket-factory-connector-j-8</artifactId>
+    <version>1.2.0</version>
+   
+</dependency>
+ <!-- Add CloudSQL Starter for MySQL -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-gcp-starter-sql-mysql</artifactId>
+      </dependency>
 	</dependencies>
 
 	<dependencyManagement>
 		<dependencies>
-<!--			<dependency>-->
-<!--				<groupId>org.springframework.cloud</groupId>-->
-<!--				<artifactId>spring-cloud-dependencies</artifactId>-->
-<!--				<version>${spring-cloud.version}</version>-->
-<!--				<type>pom</type>-->
-<!--				<scope>import</scope>-->
-<!--			</dependency>-->
+    <dependency>
+          <groupId>org.springframework.cloud</groupId>
+          <artifactId>spring-cloud-gcp-dependencies</artifactId>
+          <version>1.0.0.RC1</version>
+          <type>pom</type>
+          <scope>import</scope>
+          </dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -130,6 +156,16 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>appengine-maven-plugin</artifactId>
+                <version>2.2.0</version>
+                <configuration>
+                <version>1</version>
+                <projectId>GCLOUD_CONFIG</projectId>
+                </configuration>
+            </plugin>
+
 		</plugins>
 	</build>
 
