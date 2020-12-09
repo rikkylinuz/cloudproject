@@ -10,7 +10,7 @@
 	<groupId>com.utahub.services</groupId>
 	<artifactId>utahubservices</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>Uta Hub</name>
 	<description>Demo project for Spring Boot</description>
 
