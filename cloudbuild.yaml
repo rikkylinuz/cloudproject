@@ -14,7 +14,7 @@ steps:
 # Step 3: This step will execute app.yaml in your ui folder and deploy your app based on the configuration specified
   - name: "gcr.io/cloud-builders/gcloud"
     dir: 'frontend'
-    args: ["app", "deploy"]
+    args: ["app", "deploy","--stop-previous-version"]
 # timeout specified for this step as deployment may take more that default time(10min)
     timeout: "30m0s" 
 
