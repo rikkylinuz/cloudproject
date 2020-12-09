@@ -22,7 +22,7 @@ steps:
 # Step 4: Running maven tests
   - name: maven:3-jdk-8
     entrypoint: mvn
-    dir: 'server'
+    dir: 'demo'
     args: ["test"]
 
 # Step 5: Running **mvn clean install** and skipping test cases
