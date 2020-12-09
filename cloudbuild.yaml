@@ -29,7 +29,7 @@ steps:
   - name: maven:3-jdk-8
     entrypoint: mvn
     dir: 'demo'
-    args: ["clean", "install", "-Dmaven.test.skip=true"]
+    args: ["clean", "install"]
 
 # Step 6: Creating docker image using docker file present in server folder
   - name: docker
