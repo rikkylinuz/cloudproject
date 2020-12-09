@@ -28,12 +28,12 @@ steps:
 # Step 5: Running **mvn clean install** and skipping test cases
   - name: maven:3-jdk-8
     entrypoint: mvn
-    dir: 'server'
+    dir: 'demo'
     args: ["clean", "install", "-Dmaven.test.skip=true"]
 
 # Step 6: Creating docker image using docker file present in server folder
   - name: docker
-    dir: 'server'
+    dir: 'demo'
     args: ["build", "-t", "gcr.io/utahub/webapp3", "."]
 
 # Step 7: pushing docker image to GCP Container Registry
@@ -42,7 +42,7 @@ steps:
 
 # Step 8: Deploying this image using app.yaml present in **server/src/main/appengine** to GCP **APP ENGINE**
   - name: 'gcr.io/cloud-builders/gcloud'
-    dir: 'server/src/main/appengine'
+    dir: 'demo/src/main/appengine'
     args: ['app', 'deploy', "--image-url=gcr.io/utahub/webapp3"]
     timeout: "30m0s"
 
