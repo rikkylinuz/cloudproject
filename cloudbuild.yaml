@@ -2,21 +2,21 @@
 steps:
 # frontend deployment
 # Step 1: For installing dependencies
-  - name: "gcr.io/cloud-builders/npm"
-    dir: 'frontend'
-    args: ["install"]
+#   - name: "gcr.io/cloud-builders/npm"
+#     dir: 'frontend'
+#     args: ["install"]
 
 # Step 2: For creating optinimized build
-  - name: "gcr.io/cloud-builders/npm"
-    dir: 'frontend'
-    args: ["run", "build","--stop-previous-version"]
+#   - name: "gcr.io/cloud-builders/npm"
+#     dir: 'frontend'
+#     args: ["run", "build","--stop-previous-version"]
 
 # Step 3: This step will execute app.yaml in your ui folder and deploy your app based on the configuration specified
-  - name: "gcr.io/cloud-builders/gcloud"
-    dir: 'frontend'
-    args: ["app", "deploy","--stop-previous-version"]
+#   - name: "gcr.io/cloud-builders/gcloud"
+#     dir: 'frontend'
+#     args: ["app", "deploy","--stop-previous-version"]
 # timeout specified for this step as deployment may take more that default time(10min)
-    timeout: "30m0s" 
+#     timeout: "30m0s" 
 
 # backend deployment
 # Step 4: Running maven tests
