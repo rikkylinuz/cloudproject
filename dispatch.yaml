@@ -1,6 +1,6 @@
 dispatch:
 # Route the URLs that point to the java backend to backend service
-  - url: "*/test/v1/*"
+  - url: "*/api/auth/*"
     service: backend
 # Route all other urls to the React.js frontend
   - url: "*/*"
