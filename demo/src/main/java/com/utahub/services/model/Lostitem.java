@@ -3,6 +3,7 @@ import java.sql.Blob;
 
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,18 +24,20 @@ public class Lostitem {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long LostitemId;
-	
+	@Column
 	@NotBlank
 	@Size(max = 60)
 	private String LostitemName;
 	@NotBlank
+	@Column
 	@Size(max = 150)
 	private String Lostitemdescription;
 	@NotBlank
+	@Column
 	@Lob
 	@Basic(fetch = FetchType.EAGER)
 	private String picture;
-
+	@Column
 	@NotBlank
 	private String sellerName;
 

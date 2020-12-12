@@ -19,21 +19,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-
+    @Column
     @NotBlank
     @Size(max = 15)
     public String username;
-
+    @Column
     @NotBlank
     @Size(max = 120)
     public String password;
-
+    @Column
     @NaturalId
     @NotBlank
     @Size(max = 40)
     @Email
     public String email;
-
+    @Column
     @NotBlank
     @Size(max = 40)
     public String fullname;
