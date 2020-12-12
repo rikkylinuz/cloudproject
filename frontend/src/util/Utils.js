@@ -3,6 +3,8 @@ import { API_BASE_URL } from './Constants';
 const request = (options) => {
     const headers = new Headers({
         'Content-Type': 'application/json',
+	'Access-Control-Allow-Origin': '*',
+	'Access-Control-Allow-Credentials': 'true'
     })
 
     const defaults = {headers: headers};

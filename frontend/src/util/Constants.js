@@ -1,4 +1,4 @@
-export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://backend-dot-utahub-298002.uc.r.appspot.com/api';
+export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://backend-dot-utahubnew.uc.r.appspot.com/api';
 
 export const NAME_MIN_LENGTH = 4;
 export const NAME_MAX_LENGTH = 40;
