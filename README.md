@@ -7,7 +7,7 @@ Backend - Java, Springboot<br>
 Database - MySQL<br>
 Deployed - GCP App Engine<br>
 
-<h3>Usecases</h3>
+<h3>Use cases</h3>
 1. Users can post an item for sale.<br>
 2. Users can lookup for an item to buy.<br>
 3. Users can post an item found in campus with details.<br>
